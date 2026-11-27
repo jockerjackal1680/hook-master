@@ -1,6 +1,10 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 const port = 3000;
+
+// Serve static files from current directory
+app.use(express.static('public'));
 
 // Middleware to parse JSON bodies
 app.use(express.json());
@@ -29,9 +33,9 @@ app.post('/title', (req, res) => {
   res.json({ status: 'title_updated' });
 });
 
-// Serve a simple icon for notifications
+// Serve the user's photo as icon (using my-photo.jpg)
 app.get('/icon.png', (req, res) => {
-  res.sendFile(__dirname + '/icon.png');
+  res.sendFile(path.join(__dirname, 'my-photo.jpg'));
 });
 
 // Start the server
@@ -39,4 +43,5 @@ app.listen(port, () => {
   console.log(`\n🚀 Hook Master Backend Running at http://localhost:${port}`);
   console.log(`   Endpoint: POST /track`);
   console.log(`   Endpoint: POST /title`);
+  console.log(`   Icon: GET /icon.png`);
 });
